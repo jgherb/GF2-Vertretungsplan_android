@@ -1,0 +1,238 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent" android:layout_height="match_parent"
+    android:background="#ffffff">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_centerInParent="true">
+
+        <TextView
+            android:text="@string/second_title"
+            android:id="@+id/textView3"
+            style="@style/secondTextStyle" />
+
+        <ScrollView
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent">
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentRight="true"
+                android:layout_centerInParent="true">
+
+                    <RelativeLayout style="@style/secondRelativeStyle">
+
+                        <Button
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="5a"
+                            android:id="@+id/button5a"
+                            android:layout_alignParentLeft="true"
+                            android:background="@color/colorButton"
+                            android:capitalize="none" />
+
+                        <Button
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="5b"
+                            android:id="@+id/button5b"
+                            android:layout_alignParentRight="false"
+                            android:layout_centerHorizontal="true"
+                            android:background="@color/colorButton" />
+
+                        <Button
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="5c"
+                            android:id="@+id/button5c"
+                            android:layout_alignParentRight="true"
+                            android:background="@color/colorButton" />
+                    </RelativeLayout>
+
+                    <RelativeLayout style="@style/secondButtonGreyStyle">
+
+                        <Button
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="6a"
+                            android:id="@+id/button6a"
+                            android:layout_alignParentLeft="true"
+                            android:layout_alignParentRight="false"
+                            android:layout_alignParentTop="false"
+                            android:background="@color/colorButton" />
+
+                        <Button
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="6b"
+                            android:id="@+id/button6b"
+                            android:layout_alignParentRight="false"
+                            android:layout_centerHorizontal="true"
+                            android:background="@color/colorButton" />
+
+                        <Button
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="6c"
+                            android:id="@+id/button6c"
+                            android:layout_alignParentRight="true"
+                            android:background="@color/colorButton" />
+                    </RelativeLayout>
+
+                    <RelativeLayout style="@style/secondRelativeStyle">
+
+                        <Button
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="7a"
+                            android:id="@+id/button7a"
+                            android:layout_alignParentLeft="true"
+                            android:background="@color/colorButton" />
+
+                        <Button
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="7b"
+                            android:id="@+id/button7b"
+                            android:layout_alignParentRight="false"
+                            android:layout_centerHorizontal="true"
+                            android:background="@color/colorButton" />
+
+                        <Button
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="7c"
+                            android:id="@+id/button7c"
+                            android:layout_alignParentRight="true"
+                            android:background="@color/colorButton" />
+                    </RelativeLayout>
+
+                    <RelativeLayout style="@style/secondButtonGreyStyle">
+
+                        <Button
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="8a"
+                            android:id="@+id/button8a"
+                            android:layout_alignParentLeft="true"
+                            android:background="@color/colorButton" />
+
+                        <Button
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="8b"
+                            android:id="@+id/button8b"
+                            android:layout_alignParentRight="false"
+                            android:layout_centerHorizontal="true"
+                            android:background="@color/colorButton" />
+
+                        <Button
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="8c"
+                            android:id="@+id/button8c"
+                            android:layout_alignParentRight="true"
+                            android:background="@color/colorButton" />
+                    </RelativeLayout>
+
+                    <RelativeLayout style="@style/secondRelativeStyle">
+
+                        <Button
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="9a"
+                            android:id="@+id/button9a"
+                            android:layout_alignParentLeft="true"
+                            android:background="@color/colorButton" />
+
+                        <Button
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="9b"
+                            android:id="@+id/button9b"
+                            android:layout_alignParentRight="false"
+                            android:layout_centerHorizontal="true"
+                            android:background="@color/colorButton" />
+
+                        <Button
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="9c"
+                            android:id="@+id/button9c"
+                            android:layout_alignParentRight="true"
+                            android:background="@color/colorButton" />
+                    </RelativeLayout>
+
+                    <RelativeLayout style="@style/secondButtonGreyStyle">
+
+                        <Button
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="10a"
+                            android:id="@+id/button10a"
+                            android:layout_alignParentLeft="true"
+                            android:background="@color/colorButton" />
+
+                        <Button
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="10b"
+                            android:id="@+id/button10b"
+                            android:layout_alignParentRight="false"
+                            android:layout_centerHorizontal="true"
+                            android:background="@color/colorButton" />
+
+                        <Button
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="10c"
+                            android:id="@+id/button10c"
+                            android:layout_alignParentRight="true"
+                            android:background="@color/colorButton" />
+                    </RelativeLayout>
+
+                    <RelativeLayout style="@style/secondRelativeStyle">
+
+                        <Button
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Ks1"
+                            android:id="@+id/buttonKs1"
+                            android:layout_alignParentLeft="true"
+                            android:background="@color/colorButton" />
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Noscio.eu"
+                            android:id="@+id/textView4"
+                            android:textSize="24dp"
+                            android:onClick="OpenWebsite"
+                            android:clickable="true"
+                            android:layout_centerInParent="true"
+                            android:textColor="#ffffff" />
+                        <Button
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Ks2"
+                            android:id="@+id/buttonKs2"
+                            android:layout_alignParentRight="true"
+                            android:background="@color/colorButton" />
+                    </RelativeLayout>
+            </LinearLayout>
+        </ScrollView>
+
+    </LinearLayout>
+
+</RelativeLayout>

@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">GF2 Vertretungsplan</string>
+    <string name="action_settings">Einstellungen</string>
+    <string name="action_change_class">Andere Klasse wählen</string>
+    <string name="_7c">7c</string>
+    <string name="second_title">Bitte Klasse auswählen</string>
+</resources>
