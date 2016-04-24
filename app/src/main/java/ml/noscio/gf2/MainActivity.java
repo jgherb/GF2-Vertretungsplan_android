@@ -23,7 +23,9 @@ import android.util.Log;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.ViewTreeObserver;
 import android.webkit.WebView;
+import android.widget.ScrollView;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GoogleApiAvailability;
@@ -162,6 +164,21 @@ public class MainActivity extends AppCompatActivity {
         }
         Log.i("Reload", "finish");
         new ReloadWebView(this, 1, webview);
+
+        final ScrollView scrollView = (ScrollView) findViewById(R.id.scrollWebView);
+        scrollView.getViewTreeObserver().addOnScrollChangedListener(new ViewTreeObserver.OnScrollChangedListener() {
+
+            @Override
+            public void onScrollChanged() {
+                int scrollX = scrollView.getScrollX(); //for horizontalScrollView
+                int scrollY = scrollView.getScrollY(); //for verticalScrollView
+                //DO SOMETHING WITH THE SCROLL COORDINATES
+                if(scrollY<1) {
+                    reload();
+                    Log.i("reload","forced");
+                }
+            }
+        });
 
 
         //webview.getSettings().setJavaScriptEnabled(true);
