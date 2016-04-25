@@ -35,6 +35,7 @@ import java.util.TimerTask;
 
 public class MainActivity extends AppCompatActivity {
     private static final int PLAY_SERVICES_RESOLUTION_REQUEST = 9000;
+    public static boolean forced_class_change = false;
     private static final String TAG = "MainActivity";
     static Context _context;
     WebView webview;
@@ -95,7 +96,9 @@ public class MainActivity extends AppCompatActivity {
             }
             else {
                 Log.i("DEBUG", "begin SQL");
-                klasse = dbManager.read("klasse");
+                if(!forced_class_change) {
+                    klasse = dbManager.read("klasse");
+                }
                 if((!klasse.contains("a"))&(!klasse.contains("b"))&(!klasse.contains("c"))) {
                     login2.save_is_required = true;
                     Intent intent = new Intent(MainActivity.this, login2.class);
