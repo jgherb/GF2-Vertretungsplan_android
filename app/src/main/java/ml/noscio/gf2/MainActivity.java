@@ -65,9 +65,6 @@ public class MainActivity extends AppCompatActivity {
 
         webview = (WebView) findViewById(R.id.webView);
 
-        //Only for testing
-        //DB_loaded = false;
-
         if (!DB_loaded) {
             android_id = Settings.Secure.getString(this.getApplicationContext().getContentResolver(), Settings.Secure.ANDROID_ID);
             Log.i("DEBUG", "reached Main");
