@@ -13,10 +13,10 @@
     tools:showIn="@layout/activity_main"
     android:foreground="#0c76b3"
     android:background="#0c76b3">
-    <ScrollView
+    <!--<ScrollView
         android:layout_width="fill_parent"
         android:id="@+id/scrollWebView"
-        android:layout_height="fill_parent">
+        android:layout_height="fill_parent">-->
     <WebView
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
@@ -27,5 +27,5 @@
         android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
         android:background="#0c76b3" />
-    </ScrollView>
+    <!--</ScrollView>-->
 </RelativeLayout>

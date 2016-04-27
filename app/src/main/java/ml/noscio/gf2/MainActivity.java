@@ -1,6 +1,7 @@
 package ml.noscio.gf2;
 
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -25,6 +26,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.ViewTreeObserver;
 import android.webkit.WebView;
+import android.webkit.WebViewClient;
 import android.widget.ScrollView;
 
 import com.google.android.gms.common.ConnectionResult;
@@ -150,25 +152,53 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });*/
-        Log.i("DEBUG", "XSS");
+
+        //final ProgressDialog progDailog = ProgressDialog.show(_context, "Loading","Please wait...", true);
+        //progDailog.setCancelable(false);
+
         webview.getSettings().setJavaScriptEnabled(true);
+        webview.getSettings().setLoadWithOverviewMode(true);
+        webview.getSettings().setUseWideViewPort(true);
+        webview.setWebViewClient(new WebViewClient(){
+
+            @Override
+            public boolean shouldOverrideUrlLoading(WebView view, String url) {
+                //progDailog.show();
+                view.loadUrl(url);
+                Log.i("DEBUG","page load started");
+                return true;
+            }
+            @Override
+            public void onPageFinished(WebView view, final String url) {
+                //progDailog.dismiss();
+                Log.i("DEBUG","page finished");
+            }
+        });
+
+
+
+        Log.i("DEBUG", "XSS");
+        //webview.getSettings().setDomStorageEnabled(true);
+        //webview.getSettings().setJavaScriptEnabled(true);
+        Log.i("DEBUG", "XSS2");
         String summary = "<html><body>Bitte warten...</body></html>";
-        webview.loadData(summary, "text/html", null);
+        //webview.loadData(summary, "text/html", null);
         ConnectivityManager connMgr = (ConnectivityManager)
                 getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
         if (networkInfo != null && networkInfo.isConnected()) {
-            webview.loadUrl(SecurityValues.url_data_klasse + klasse + SecurityValues.url_data_version + version + SecurityValues.url_data_id + android_id);
+            //webview.loadUrl(SecurityValues.url_data_klasse + klasse + SecurityValues.url_data_version + version + SecurityValues.url_data_id + android_id);
+            webview.loadUrl("http://www.example.com");
             Log.i("url",SecurityValues.url_data_klasse + klasse + SecurityValues.url_data_version + version + SecurityValues.url_data_id + android_id);
             Log.i("klasse", klasse);
         } else {
             summary = "<html><body>Keine Internetverbindung!</body></html>";
-            webview.loadData(summary, "text/html", null);
+            //webview.loadData(summary, "text/html", null);
         }
         Log.i("Reload", "finish");
         new ReloadWebView(this, 1, webview);
 
-        final ScrollView scrollView = (ScrollView) findViewById(R.id.scrollWebView);
+        /*final ScrollView scrollView = (ScrollView) findViewById(R.id.scrollWebView);
         scrollView.getViewTreeObserver().addOnScrollChangedListener(new ViewTreeObserver.OnScrollChangedListener() {
 
             @Override
@@ -181,7 +211,7 @@ public class MainActivity extends AppCompatActivity {
                     Log.i("reload","forced");
                 }
             }
-        });
+        });*/
 
 
         //webview.getSettings().setJavaScriptEnabled(true);
