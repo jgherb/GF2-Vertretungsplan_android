@@ -40,7 +40,6 @@ public class MainActivity extends AppCompatActivity {
     public static boolean forced_class_change = false;
     private static final String TAG = "MainActivity";
     static Context _context;
-    WebView webview;
     String version = "2.0-dev";
     public static String klasse = "";
     static boolean DB_loaded = false;
@@ -68,7 +67,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        webview = (WebView) findViewById(R.id.webView);
+        WebView webview = (WebView) findViewById(R.id.webView);
 
         //Only for testing
         //DB_loaded = false;
