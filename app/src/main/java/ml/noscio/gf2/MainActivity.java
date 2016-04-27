@@ -1,7 +1,6 @@
 package ml.noscio.gf2;
 
 import android.app.Activity;
-import android.app.ProgressDialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -24,10 +23,7 @@ import android.util.Log;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.ViewTreeObserver;
 import android.webkit.WebView;
-import android.webkit.WebViewClient;
-import android.widget.ScrollView;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GoogleApiAvailability;
@@ -37,9 +33,9 @@ import java.util.TimerTask;
 
 public class MainActivity extends AppCompatActivity {
     private static final int PLAY_SERVICES_RESOLUTION_REQUEST = 9000;
-    public static boolean forced_class_change = false;
     private static final String TAG = "MainActivity";
     static Context _context;
+    WebView webview;
     String version = "2.0-dev";
     public static String klasse = "";
     static boolean DB_loaded = false;
@@ -67,7 +63,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        WebView webview = (WebView) findViewById(R.id.webView);
+        webview = (WebView) findViewById(R.id.webView);
 
         //Only for testing
         //DB_loaded = false;
@@ -97,9 +93,7 @@ public class MainActivity extends AppCompatActivity {
             }
             else {
                 Log.i("DEBUG", "begin SQL");
-                if(!forced_class_change) {
-                    klasse = dbManager.read("klasse");
-                }
+                klasse = dbManager.read("klasse");
                 if((!klasse.contains("a"))&(!klasse.contains("b"))&(!klasse.contains("c"))) {
                     login2.save_is_required = true;
                     Intent intent = new Intent(MainActivity.this, login2.class);
@@ -151,66 +145,23 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });*/
-
-        //final ProgressDialog progDailog = ProgressDialog.show(_context, "Loading","Please wait...", true);
-        //progDailog.setCancelable(false);
-
-        webview.getSettings().setJavaScriptEnabled(true);
-        webview.getSettings().setLoadWithOverviewMode(true);
-        webview.getSettings().setUseWideViewPort(true);
-        webview.setWebViewClient(new WebViewClient(){
-
-            @Override
-            public boolean shouldOverrideUrlLoading(WebView view, String url) {
-                //progDailog.show();
-                view.loadUrl(url);
-                Log.i("DEBUG","page load started");
-                return true;
-            }
-            @Override
-            public void onPageFinished(WebView view, final String url) {
-                //progDailog.dismiss();
-                Log.i("DEBUG","page finished");
-            }
-        });
-
-
-
         Log.i("DEBUG", "XSS");
-        //webview.getSettings().setDomStorageEnabled(true);
-        //webview.getSettings().setJavaScriptEnabled(true);
-        Log.i("DEBUG", "XSS2");
+        webview.getSettings().setJavaScriptEnabled(true);
         String summary = "<html><body>Bitte warten...</body></html>";
-        //webview.loadData(summary, "text/html", null);
+        webview.loadData(summary, "text/html", null);
         ConnectivityManager connMgr = (ConnectivityManager)
                 getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
         if (networkInfo != null && networkInfo.isConnected()) {
-            //webview.loadUrl(SecurityValues.url_data_klasse + klasse + SecurityValues.url_data_version + version + SecurityValues.url_data_id + android_id);
-            webview.loadUrl("http://www.example.com");
+            webview.loadUrl(SecurityValues.url_data_klasse + klasse + SecurityValues.url_data_version + version + SecurityValues.url_data_id + android_id);
             Log.i("url",SecurityValues.url_data_klasse + klasse + SecurityValues.url_data_version + version + SecurityValues.url_data_id + android_id);
             Log.i("klasse", klasse);
         } else {
             summary = "<html><body>Keine Internetverbindung!</body></html>";
-            //webview.loadData(summary, "text/html", null);
+            webview.loadData(summary, "text/html", null);
         }
         Log.i("Reload", "finish");
         new ReloadWebView(this, 1, webview);
-
-        /*final ScrollView scrollView = (ScrollView) findViewById(R.id.scrollWebView);
-        scrollView.getViewTreeObserver().addOnScrollChangedListener(new ViewTreeObserver.OnScrollChangedListener() {
-
-            @Override
-            public void onScrollChanged() {
-                int scrollX = scrollView.getScrollX(); //for horizontalScrollView
-                int scrollY = scrollView.getScrollY(); //for verticalScrollView
-                //DO SOMETHING WITH THE SCROLL COORDINATES
-                if(scrollY<1) {
-                    reload();
-                    Log.i("reload","forced");
-                }
-            }
-        });*/
 
 
         //webview.getSettings().setJavaScriptEnabled(true);
@@ -291,23 +242,23 @@ public class MainActivity extends AppCompatActivity {
                 public void run() {
                     MainActivity.counter++;
                     if((counter>60)|reload_forced) {
-                    reload_forced = false;
-                    counter = 0;
+                        reload_forced = false;
+                        counter = 0;
                         Log.i("reg_value","triggered");
-                    android_id = Settings.Secure.getString(wv.getContext().getContentResolver(),
-                            Settings.Secure.ANDROID_ID);
-                    String summary = "<html><body>Bitte warten...</body></html>";
-                    wv.loadData(summary, "text/html", null);
-                    ConnectivityManager connMgr = (ConnectivityManager)
-                            getSystemService(Context.CONNECTIVITY_SERVICE);
-                    NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
-                    if (networkInfo != null && networkInfo.isConnected()) {
-                        wv.loadUrl("https://noscio.eu/gf2/" + klasse + ".php?v=" + version + "&i=" + android_id);
-                        Log.i("klasse",klasse);
-                    } else {
-                        summary = "<html><body>Keine Internetverbindung!</body></html>";
+                        android_id = Settings.Secure.getString(wv.getContext().getContentResolver(),
+                                Settings.Secure.ANDROID_ID);
+                        String summary = "<html><body>Bitte warten...</body></html>";
                         wv.loadData(summary, "text/html", null);
-                    }
+                        ConnectivityManager connMgr = (ConnectivityManager)
+                                getSystemService(Context.CONNECTIVITY_SERVICE);
+                        NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
+                        if (networkInfo != null && networkInfo.isConnected()) {
+                            wv.loadUrl("https://noscio.eu/gf2/" + klasse + ".php?v=" + version + "&i=" + android_id);
+                            Log.i("klasse",klasse);
+                        } else {
+                            summary = "<html><body>Keine Internetverbindung!</body></html>";
+                            wv.loadData(summary, "text/html", null);
+                        }
                     }
                 }
             });
