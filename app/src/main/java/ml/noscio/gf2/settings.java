@@ -61,7 +61,7 @@ public class settings extends AppCompatActivity {
 // otherwise :
         //mytabhost.addTab(mytabhost.newTabSpec("tab_fach").setIndicator("Fächer", getResources().getDrawable(android.R.drawable.ic_menu_edit)).setContent(R.id.Onglet2));
 
-        mytabhost.addTab(mytabhost.newTabSpec("tab_allgemein").setIndicator("Datenschutz", getResources().getDrawable(android.R.drawable.ic_menu_view)).setContent(R.id.Onglet3));
+        mytabhost.addTab(mytabhost.newTabSpec("tab_allgemein").setIndicator("Sonstiges", getResources().getDrawable(android.R.drawable.ic_menu_view)).setContent(R.id.Onglet3));
 
         TextView IDview = (TextView) findViewById(R.id.textViewAndroidID);
         assert IDview != null;
@@ -211,7 +211,6 @@ setFach("Geo", Box_Geo.isChecked());
 }
 });
 Box_Geo.setChecked(getState("Geo"));
-
 */
 
         final Button button5a = (Button) findViewById(R.id.button5a);
