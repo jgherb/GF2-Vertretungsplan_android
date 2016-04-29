@@ -17,6 +17,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
+import android.widget.Switch;
 import android.widget.TabHost;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -82,6 +83,22 @@ public class settings extends AppCompatActivity {
             }
         });
 
+        final Switch beta_switch = (Switch) findViewById(R.id.switch1);
+        assert beta_switch != null;
+        String beta_str = dbManager.read("beta");
+        if(beta_str.equals("true")) {
+            beta_switch.setChecked(true);
+        }
+        beta_switch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if(isChecked) {
+                    dbManager.write("beta","true");
+                }
+                else {
+                    dbManager.write("beta","false");
+                }
+            }
+        });
 
 /*
 final CheckBox Box_E = (CheckBox) findViewById(R.id.checkE);

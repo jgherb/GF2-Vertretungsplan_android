@@ -85,6 +85,7 @@ public class MainActivity extends AppCompatActivity {
             if (firststart) {
                 Log.i("DEBUG", "first");
                 dbManager.deleteTable();
+                dbManager.write("beta","false");
                 Intent intent = new Intent(MainActivity.this, login1.class);
                 startActivity(intent);
             }
