@@ -151,7 +151,12 @@ public class MainActivity extends AppCompatActivity {
                 getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
         if (networkInfo != null && networkInfo.isConnected()) {
-            webview.loadUrl(SecurityValues.url_data_klasse + klasse + SecurityValues.url_data_version + version + SecurityValues.url_data_id + android_id);
+            String url = SecurityValues.url_data_klasse + klasse + SecurityValues.url_data_version + version + SecurityValues.url_data_id + android_id;
+            String beta = dbManager.read("beta");
+            if(beta.equals("true")) {
+                url = SecurityValues.url_data_beta_klasse + klasse + SecurityValues.url_data_version + version + SecurityValues.url_data_id + android_id;
+            }
+            webview.loadUrl(url);
             Log.i("url",SecurityValues.url_data_klasse + klasse + SecurityValues.url_data_version + version + SecurityValues.url_data_id + android_id);
             Log.i("klasse", klasse);
         } else {
