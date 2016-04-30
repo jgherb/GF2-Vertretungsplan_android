@@ -125,4 +125,10 @@ public class login1 extends AppCompatActivity {
         reader.read(buffer);
         return new String(buffer);
     }
+    public void onPrivacyViewClick(View v) {
+        String url = "https://www.noscio.eu/privacy";
+        Intent i = new Intent(Intent.ACTION_VIEW);
+        i.setData(Uri.parse(url));
+        startActivity(i);
+    }
 }
