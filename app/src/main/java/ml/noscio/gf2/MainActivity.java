@@ -37,7 +37,7 @@ public class MainActivity extends AppCompatActivity {
     public static String url = "";
     static Context _context;
     WebView webview;
-    String version = "2.0.3";
+    String version = "2.0.5";
     public static String klasse = "";
     static boolean DB_loaded = false;
     public static String android_id = "not_given";

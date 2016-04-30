@@ -78,6 +78,7 @@ public class login1 extends AppCompatActivity {
                 dbManager.write("klasse","5a");
                 dbManager.write("subjects","");
                 dbManager.write("push","");
+                login2.save_is_required = true;
                 Intent intent = new Intent(login1.this, login2.class);
                 startActivity(intent);
             }
