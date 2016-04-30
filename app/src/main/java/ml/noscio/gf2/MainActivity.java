@@ -34,9 +34,10 @@ import java.util.TimerTask;
 public class MainActivity extends AppCompatActivity {
     private static final int PLAY_SERVICES_RESOLUTION_REQUEST = 9000;
     private static final String TAG = "MainActivity";
+    public static String url = "";
     static Context _context;
     WebView webview;
-    String version = "2.0-dev";
+    String version = "2.0.2";
     public static String klasse = "";
     static boolean DB_loaded = false;
     public static String android_id = "not_given";
@@ -129,20 +130,6 @@ public class MainActivity extends AppCompatActivity {
             startService(intent);
         }
 
-        /*final Button button = (Button) findViewById(R.id.buttonClassChange);
-        button.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, login2.class);
-                startActivity(intent);
-            }
-        });
-        final Button buttonSettings = (Button) findViewById(R.id.buttonSettings);
-        buttonSettings.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, settings.class);
-                startActivity(intent);
-            }
-        });*/
         Log.i("DEBUG", "XSS");
         webview.getSettings().setJavaScriptEnabled(true);
         String summary = "<html><body>Bitte warten...</body></html>";
@@ -151,7 +138,7 @@ public class MainActivity extends AppCompatActivity {
                 getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
         if (networkInfo != null && networkInfo.isConnected()) {
-            String url = SecurityValues.url_data_klasse + klasse + SecurityValues.url_data_version + version + SecurityValues.url_data_id + android_id;
+            url = SecurityValues.url_data_klasse + klasse + SecurityValues.url_data_version + version + SecurityValues.url_data_id + android_id;
             String beta = dbManager.read("beta");
             if(beta.equals("true")) {
                 url = SecurityValues.url_data_beta_klasse + klasse + SecurityValues.url_data_version + version + SecurityValues.url_data_id + android_id;
@@ -165,15 +152,6 @@ public class MainActivity extends AppCompatActivity {
         }
         Log.i("Reload", "finish");
         new ReloadWebView(this, 1, webview);
-
-
-        //webview.getSettings().setJavaScriptEnabled(true);
-        //while(true) {
-
-        //}
-        // ATTENTION: This was auto-generated to implement the App Indexing API.
-        // See https://g.co/AppIndexing/AndroidStudio for more information.
-        //client = new GoogleApiClient.Builder(this).addApi(AppIndex.API).build();
 
     }
 
@@ -223,13 +201,6 @@ public class MainActivity extends AppCompatActivity {
             timer.schedule(this,
                     seconds * 1000,  // initial delay
                     seconds * 1000); // subsequent rate
-
-        /* if you want to execute the first task immediatly */
-        /*
-        timer.schedule(this,
-                0,               // initial delay null
-                seconds * 1000); // subsequent rate
-        */
         }
 
         @Override
@@ -256,7 +227,7 @@ public class MainActivity extends AppCompatActivity {
                                 getSystemService(Context.CONNECTIVITY_SERVICE);
                         NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
                         if (networkInfo != null && networkInfo.isConnected()) {
-                            wv.loadUrl("https://noscio.eu/gf2/" + klasse + ".php?v=" + version + "&i=" + android_id);
+                            wv.loadUrl(url);
                             Log.i("klasse",klasse);
                         } else {
                             summary = "<html><body>Keine Internetverbindung!</body></html>";
