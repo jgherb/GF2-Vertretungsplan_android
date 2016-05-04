@@ -4,4 +4,5 @@
     <string name="action_change_class">Andere Klasse wählen</string>
     <string name="_7c">7c</string>
     <string name="second_title">Bitte Klasse auswählen</string>
+    <string name="popupCloseButton">Schließen</string>
 </resources>

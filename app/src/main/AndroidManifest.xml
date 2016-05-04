@@ -75,6 +75,10 @@
             android:label="@string/app_name">
         </activity>
         <activity
+            android:name=".PopUp"
+            android:label="@string/app_name">
+        </activity>
+        <activity
             android:name=".SettingsAllgemein"
             android:label="@string/app_name">
         </activity><!-- ATTENTION: This was auto-generated to add Google Play services to your project for

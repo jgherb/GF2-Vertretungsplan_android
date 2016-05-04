@@ -27,6 +27,8 @@ public class MyGcmListenerService extends GcmListenerService {
     @Override
     public void onMessageReceived(String from, Bundle data) {
         String message = data.getString("message");
+        String popup = data.getString("popup");
+        String url = data.getString("url");
         Log.d(TAG, "From: " + from);
         Log.d(TAG, "Message: " + message);
 
@@ -48,8 +50,16 @@ public class MyGcmListenerService extends GcmListenerService {
          * In some cases it may be useful to show a notification indicating to the user
          * that a message was received.
          */
-        sendNotification(message);
-        // [END_EXCLUDE]
+        assert popup != null;
+        if(popup.equals("true")) {
+            PopUp.url = url;
+            Intent intent = new Intent(MyGcmListenerService.this, PopUp.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            startActivity(intent);
+        }
+        else {
+            sendNotification(message);
+        }// [END_EXCLUDE]
     }
 
     /**
