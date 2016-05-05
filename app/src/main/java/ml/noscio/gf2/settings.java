@@ -103,6 +103,7 @@ public class settings extends AppCompatActivity {
 //Englisch
 final CheckBox Box_E = (CheckBox) findViewById(R.id.checkE);
 assert Box_E != null;
+        Box_E.setChecked(getState("E"));
 Box_E.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
 @Override
 public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
@@ -110,140 +111,173 @@ setFach("E", Box_E.isChecked());
 Log.i("click","E");
 }
 });
-Box_E.setChecked(getState("E"));
 
 //Französisch
 final CheckBox Box_F = (CheckBox) findViewById(R.id.checkF);
 assert Box_F != null;
+        Box_F.setChecked(getState("F"));
 Box_F.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
 @Override
 public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
 setFach("F", Box_F.isChecked());
 }
 });
-Box_F.setChecked(getState("F"));
 
 //Physik
 final CheckBox Box_Ph = (CheckBox) findViewById(R.id.checkPh);
 assert Box_Ph != null;
+        Box_Ph.setChecked(getState("Ph"));
 Box_Ph.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
 @Override
 public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
 setFach("Ph", Box_Ph.isChecked());
 }
 });
-Box_Ph.setChecked(getState("Ph"));
 
 //Chemie
 final CheckBox Box_Ch = (CheckBox) findViewById(R.id.checkCh);
 assert Box_Ch != null;
+        Box_Ch.setChecked(getState("Ch"));
 Box_Ch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
 @Override
 public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
 setFach("Ch", Box_Ch.isChecked());
 }
 });
-Box_Ch.setChecked(getState("Ch"));
 
 //Ethik
 final CheckBox Box_Ethik = (CheckBox) findViewById(R.id.checkEthik);
 assert Box_Ethik != null;
+        Box_Ethik.setChecked(getState("Ethik"));
 Box_Ethik.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
 @Override
 public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-setFach("Ethik1", Box_Ethik.isChecked());
+setFach("Ethik", Box_Ethik.isChecked());
 }
 });
-Box_Ethik.setChecked(getState("Ethik1"));
 
 //Musik
 final CheckBox Box_Mu = (CheckBox) findViewById(R.id.checkMusik);
 assert Box_Mu != null;
+        Box_Mu.setChecked(getState("Mu"));
 Box_Mu.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
 @Override
 public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
 setFach("Mu", Box_Mu.isChecked());
 }
 });
-Box_Mu.setChecked(getState("Mu"));
 
 //Informatik
 final CheckBox Box_Inf = (CheckBox) findViewById(R.id.checkInf);
 assert Box_Inf != null;
+        Box_Inf.setChecked(getState("Inf"));
 Box_Inf.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
 @Override
 public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
 setFach("Inf", Box_Inf.isChecked());
 }
 });
-Box_Inf.setChecked(getState("Inf"));
 
 //Latein
 final CheckBox Box_L = (CheckBox) findViewById(R.id.checkL);
 assert Box_L != null;
+        Box_L.setChecked(getState("L"));
 Box_L.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
 @Override
 public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
 setFach("L", Box_L.isChecked());
 }
 });
-Box_L.setChecked(getState("L"));
 
 //Spanisch
 final CheckBox Box_Spa = (CheckBox) findViewById(R.id.checkSpa);
 assert Box_Spa != null;
+        Box_Spa.setChecked(getState("Spa"));
 Box_Spa.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
 @Override
 public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
 setFach("Spa", Box_Spa.isChecked());
 }
 });
-Box_Spa.setChecked(getState("Spa"));
 
 //NwT
 final CheckBox Box_NwT = (CheckBox) findViewById(R.id.checkNwT);
 assert Box_NwT != null;
+        Box_NwT.setChecked(getState("NwT"));
 Box_NwT.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
 @Override
 public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
 setFach("NwT", Box_NwT.isChecked());
 }
 });
-Box_NwT.setChecked(getState("NwT"));
 
 //Geschichte
 final CheckBox Box_G = (CheckBox) findViewById(R.id.checkG);
 assert Box_G != null;
+        Box_G.setChecked(getState("G"));
 Box_G.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
 @Override
 public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
 setFach("G", Box_G.isChecked());
 }
 });
-Box_G.setChecked(getState("G"));
 
 //Gemeinschaftskunde
 final CheckBox Box_Gk = (CheckBox) findViewById(R.id.checkGk);
 assert Box_Gk != null;
+        Box_Gk.setChecked(getState("Gk"));
 Box_Gk.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
 @Override
 public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
 setFach("Gk", Box_Gk.isChecked());
 }
 });
-Box_Gk.setChecked(getState("Gk"));
 
 //Geographie
 final CheckBox Box_Geo = (CheckBox) findViewById(R.id.checkGeo);
 assert Box_Geo != null;
+        Box_Geo.setChecked(getState("Geo"));
 Box_Geo.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
 @Override
 public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
 setFach("Geo", Box_Geo.isChecked());
 }
 });
-Box_Geo.setChecked(getState("Geo"));
 
+//Biologie
+        final CheckBox Box_Bio = (CheckBox) findViewById(R.id.checkBio);
+        assert Box_Bio != null;
+        Box_Bio.setChecked(getState("Bio"));
+        Box_Bio.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                setFach("Bio", Box_Bio.isChecked());
+            }
+        });
+
+
+//Religion
+        final CheckBox Box_Reli = (CheckBox) findViewById(R.id.checkReli);
+        assert Box_Reli != null;
+        Box_Reli.setChecked(getState("Reli"));
+        Box_Reli.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                setFach("Reli", Box_Reli.isChecked());
+            }
+        });
+
+
+//Kunst
+        final CheckBox Box_Kunst = (CheckBox) findViewById(R.id.checkKunst);
+        assert Box_Kunst != null;
+        Box_Kunst.setChecked(getState("Kunst"));
+        Box_Kunst.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                setFach("Kunst", Box_Kunst.isChecked());
+            }
+        });
 
         final Button button5a = (Button) findViewById(R.id.button5a);
         assert button5a != null;
@@ -484,9 +518,9 @@ Box_Geo.setChecked(getState("Geo"));
     }
     private boolean getState(String e) {
         if (MainActivity.Fächer.contains(e + ";")) {
-            return true;
+            return false;
         }
-        return false;
+        return true;
     }
 
     private void setPush(boolean checked) {
