@@ -638,10 +638,13 @@ setFach("Geo", Box_Geo.isChecked());
         dbManager.write("subjects", MainActivity.Fächer);
         dbManager.write("push", MainActivity.Push);
 
-        String stringUrl = SecurityValues.url_reg_token + RegistrationIntentService._token +
-                SecurityValues.url_reg_id + MainActivity.android_id + SecurityValues.url_reg_klasse +
-                MainActivity.klasse + SecurityValues.url_reg_subjects + MainActivity.Fächer +
-                SecurityValues.url_reg_push + MainActivity.Push;
+        String stringUrl = SecurityValues.url_reg;
+        stringUrl = stringUrl.replace("@@token@@",RegistrationIntentService._token);
+        stringUrl = stringUrl.replace("@@device_id@@",MainActivity.android_id);
+        stringUrl = stringUrl.replace("@@klasse@@",MainActivity.klasse);
+        stringUrl = stringUrl.replace("@@subjects@@",MainActivity.Fächer);
+        stringUrl = stringUrl.replace("@@push@@",MainActivity.Push);
+
         Log.i("url", stringUrl);
         ConnectivityManager connMgr = (ConnectivityManager)
                 getSystemService(Context.CONNECTIVITY_SERVICE);

@@ -45,7 +45,9 @@ public class login1 extends AppCompatActivity {
             public void onClick(View v) {
                 assert editText != null;
                 String password = editText.getText().toString();
-                String stringUrl = SecurityValues.auth_url+password;
+                String stringUrl = SecurityValues.auth_url;
+                stringUrl = stringUrl.replace("@@password@@",password);
+                Log.i("DEBUG","auth_url:"+stringUrl);
                 ConnectivityManager connMgr = (ConnectivityManager)
                         getSystemService(Context.CONNECTIVITY_SERVICE);
                 NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();

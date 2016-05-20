@@ -2,16 +2,20 @@ package ml.noscio.gf2;
 
 import android.app.Activity;
 import android.content.BroadcastReceiver;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.ServiceConnection;
 import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.IBinder;
 import android.preference.PreferenceManager;
 import android.provider.Settings;
 import android.support.design.widget.FloatingActionButton;
@@ -24,10 +28,20 @@ import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.webkit.WebView;
+import android.widget.Toast;
 
+import com.android.vending.billing.IInAppBillingService;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GoogleApiAvailability;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.Reader;
+import java.io.UnsupportedEncodingException;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.util.ArrayList;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -37,7 +51,7 @@ public class MainActivity extends AppCompatActivity {
     public static String url = "";
     static Context _context;
     WebView webview;
-    String version = "2.1.0";
+    String version = "3.0.0";
     public static String klasse = "";
     static boolean DB_loaded = false;
     public static String android_id = "not_given";
@@ -45,11 +59,31 @@ public class MainActivity extends AppCompatActivity {
     public static String Push = "1";
     private BroadcastReceiver mRegistrationBroadcastReceiver;
     private boolean isReceiverRegistered;
+    IInAppBillingService mService;
+
+    ServiceConnection mServiceConn = new ServiceConnection() {
+        @Override
+        public void onServiceDisconnected(ComponentName name) {
+            mService = null;
+        }
+
+        @Override
+        public void onServiceConnected(ComponentName name,
+                                       IBinder service) {
+            mService = IInAppBillingService.Stub.asInterface(service);
+        }
+    };
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         _context = this.getApplicationContext();
+
+        Intent serviceIntent =
+                new Intent("com.android.vending.billing.InAppBillingService.BIND");
+        serviceIntent.setPackage("com.android.vending");
+        bindService(serviceIntent, mServiceConn, Context.BIND_AUTO_CREATE);
+
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         android_id = Settings.Secure.getString(this.getApplicationContext().getContentResolver(),
@@ -105,8 +139,51 @@ public class MainActivity extends AppCompatActivity {
                 Log.i("push", Push);
                 Log.i("DEBUG", "read");
             }
+            String db_buffer = dbManager.read("url_update");
+            if(db_buffer.length()>0) {
+                SecurityValues.url_update = db_buffer;
+            }
+            db_buffer = "";
+            db_buffer = dbManager.read("auth_url");
+            if(db_buffer.length()>0) {
+                SecurityValues.auth_url = db_buffer;
+            }
+            db_buffer = "";
+            db_buffer = dbManager.read("url_data");
+            if(db_buffer.length()>0) {
+                SecurityValues.url_data = db_buffer;
+            }
+            db_buffer = "";
+            db_buffer = dbManager.read("url_data_beta");
+            if(db_buffer.length()>0) {
+                SecurityValues.url_data_beta = db_buffer;
+            }
+            db_buffer = "";
+            db_buffer = dbManager.read("url_reg");
+            if(db_buffer.length()>0) {
+                SecurityValues.url_reg = db_buffer;
+            }
+            Log.i("DEBUG",SecurityValues.url_update);
+
+            String stringUrl = SecurityValues.url_update;
+            stringUrl = stringUrl.replace("@@device_id@@",android_id);
+            stringUrl = stringUrl.replace("@@push@@",MainActivity.Push);
+            ConnectivityManager connMgr = (ConnectivityManager)
+                    getSystemService(Context.CONNECTIVITY_SERVICE);
+            NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
+            if (networkInfo != null && networkInfo.isConnected()) {
+                new DownloadWebpageTask().execute(stringUrl);
+            } else {
+                Toast.makeText(getApplicationContext(),"No network connection available.",Toast.LENGTH_LONG).show();
+            }
             DB_loaded = true;
         }
+
+        ArrayList<String> skuList = new ArrayList<String> ();
+        skuList.add("premiumUpgrade");
+        skuList.add("gas");
+        Bundle querySkus = new Bundle();
+        querySkus.putStringArrayList("ITEM_ID_LIST", skuList);
 
         mRegistrationBroadcastReceiver = new BroadcastReceiver() {
             @Override
@@ -138,13 +215,15 @@ public class MainActivity extends AppCompatActivity {
                 getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
         if (networkInfo != null && networkInfo.isConnected()) {
-            url = SecurityValues.url_data_klasse + klasse + SecurityValues.url_data_version + version + SecurityValues.url_data_id + android_id;
+            url = SecurityValues.url_data;
             String beta = dbManager.read("beta");
             if(beta.equals("true")) {
-                url = SecurityValues.url_data_beta_klasse + klasse + SecurityValues.url_data_version + version + SecurityValues.url_data_id + android_id;
+                url = SecurityValues.url_data_beta;
             }
+            url = url.replace("@@klasse@@",klasse);
+            url = url.replace("@@device_id@@",android_id);
+            url = url.replace("@@version@@",version);
             webview.loadUrl(url);
-            Log.i("url",SecurityValues.url_data_klasse + klasse + SecurityValues.url_data_version + version + SecurityValues.url_data_id + android_id);
             Log.i("klasse", klasse);
         } else {
             summary = "<html><body>Keine Internetverbindung!</body></html>";
@@ -276,4 +355,76 @@ public class MainActivity extends AppCompatActivity {
     public static void reload() {
         reload_forced = true;
     }
+    private class DownloadWebpageTask extends AsyncTask<String, Void, String> {
+        @Override
+        protected String doInBackground(String... urls) {
+
+            // params comes from the execute() call: params[0] is the url.
+            try {
+                return downloadUrl(urls[0]);
+            } catch (IOException e) {
+                return "Unable to retrieve web page. URL may be invalid.";
+            }
+        }
+        // onPostExecute displays the results of the AsyncTask.
+        @Override
+        protected void onPostExecute(String result) {
+            if(!result.contains("!!!")) {
+                Log.i("DEBUG","result:"+result);
+                return;
+            }
+            String[] arr = result.split("!!!");
+            dbManager.write("url_update",arr[0]);
+            dbManager.write("url_data",arr[1]);
+            dbManager.write("url_data_beta",arr[2]);
+            dbManager.write("url_data_reg",arr[3]);
+            Log.i("DEBUG","5#+"+arr[0]);
+        }
+    }
+    private String downloadUrl(String myurl) throws IOException {
+        InputStream is = null;
+        // Only display the first 500 characters of the retrieved
+        // web page content.
+        int len = 500;
+
+        try {
+            URL url = new URL(myurl);
+            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+            conn.setReadTimeout(10000 /* milliseconds */);
+            conn.setConnectTimeout(15000 /* milliseconds */);
+            conn.setRequestMethod("GET");
+            conn.setDoInput(true);
+            // Starts the query
+            conn.connect();
+            int response = conn.getResponseCode();
+            Log.d("DEBUG", "The response is: " + response);
+            is = conn.getInputStream();
+
+            // Convert the InputStream into a string
+            String contentAsString = readIt(is, len);
+            return contentAsString;
+
+            // Makes sure that the InputStream is closed after the app is
+            // finished using it.
+        } finally {
+            if (is != null) {
+                is.close();
+            }
+        }
+    }
+    public String readIt(InputStream stream, int len) throws IOException, UnsupportedEncodingException {
+        Reader reader = null;
+        reader = new InputStreamReader(stream, "UTF-8");
+        char[] buffer = new char[len];
+        reader.read(buffer);
+        return new String(buffer);
+    }
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        if (mService != null) {
+            unbindService(mServiceConn);
+        }
+    }
 }
+

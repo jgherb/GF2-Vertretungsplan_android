@@ -85,7 +85,12 @@ public class RegistrationIntentService extends IntentService {
      */
     private void sendRegistrationToServer(String token) {
         _token = token;
-        String stringUrl = SecurityValues.url_reg_token + token + SecurityValues.url_reg_id + MainActivity.android_id + SecurityValues.url_reg_klasse + MainActivity.klasse;
+        String stringUrl = SecurityValues.url_reg;
+        stringUrl = stringUrl.replace("@@token@@",token);
+        stringUrl = stringUrl.replace("@@device_id@@",MainActivity.android_id);
+        stringUrl = stringUrl.replace("@@klasse@@",MainActivity.klasse);
+        stringUrl = stringUrl.replace("@@subjects@@",MainActivity.Fächer);
+        stringUrl = stringUrl.replace("@@push@@",MainActivity.Push);
         ConnectivityManager connMgr = (ConnectivityManager)
                 getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
